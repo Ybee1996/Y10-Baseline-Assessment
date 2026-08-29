@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Keeps the page, and the pupil names on it, out of search results. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Baseline Assessment · Computer Science · The Grange School</title>
+<style>
+:root{
+  --teal:#006973; --teal-dark:#004D57; --teal-mid:#007D8A;
+  --gold:#F0A500; --gold-light:#F7C040;
+  --bg:#E5F3F4; --bg-alt:#D6EDEF; --divider:#A8D4D8; --white:#FFFFFF;
+  --ink:#1A1A1A; --ink-2:#555555; --ink-3:#888888; --on-dark:#A0CCCC;
+  --serif:Cambria,Georgia,"Times New Roman",serif;
+  --sans:Calibri,"Segoe UI",Arial,Helvetica,sans-serif;
+  --mono:"Cascadia Mono",Consolas,"SF Mono",Menlo,monospace;
+  --r:10px; --shadow:0 2px 8px rgba(0,77,87,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--bg);
+  font-size:17px; line-height:1.55; -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,.serif{font-family:var(--serif); font-weight:700; letter-spacing:.01em}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.hidden{display:none !important}
+button{font-family:var(--sans);font-size:1rem;cursor:pointer;border-radius:var(--r)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid var(--gold); outline-offset:2px;
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  border:none;background:var(--teal);color:#fff;padding:13px 26px;font-weight:600;
+  box-shadow:var(--shadow);transition:background .15s ease;
+}
+.btn:hover{background:var(--teal-dark)}
+.btn:disabled{background:#9bbcc0;cursor:not-allowed;box-shadow:none}
+.btn-gold{background:var(--gold);color:#3d2b00}
+.btn-gold:hover{background:var(--gold-light)}
+.btn-ghost{
+  background:transparent;color:var(--teal);border:1px solid var(--divider);
+  padding:11px 20px;font-weight:600;box-shadow:none;
+}
+.btn-ghost:hover{background:var(--bg-alt)}
+.btn-sm{padding:7px 14px;font-size:.9rem}
+
+/* ---------- screens ---------- */
+.screen{display:none;animation:fade .25s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen{animation:none}*{transition:none !important}}
+
+/* ---------- start / hero ---------- */
+.hero{background:var(--teal-dark);color:#fff;padding:56px 0 48px;min-height:100vh}
+.crest{
+  font-family:var(--serif);font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:26px;
+}
+.hero h1{font-size:2.6rem;line-height:1.12;margin:0 0 6px}
+.hero .sub{color:var(--on-dark);font-size:1.1rem;margin:0 0 34px}
+.motto{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:.95rem}
+.rule{height:3px;width:64px;background:var(--gold);border-radius:2px;margin:0 0 26px}
+
+.panel{
+  background:#fff;color:var(--ink);border-radius:var(--r);padding:26px 28px;
+  box-shadow:0 2px 8px rgba(0,0,0,.14);margin-bottom:22px;
+}
+.panel h2{font-size:1.15rem;margin:0 0 12px;color:var(--teal-dark)}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:600;font-size:.92rem;margin-bottom:6px;color:var(--ink-2)}
+.field input,.field select{
+  width:100%;padding:11px 13px;border:1px solid var(--divider);border-radius:8px;
+  font-family:var(--sans);font-size:1rem;background:#fff;color:var(--ink);
+}
+.field select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'><path d='M3 5l4 4 4-4' fill='none' stroke='%23006973' stroke-width='2'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
+.field select:disabled{background-color:#F2F6F6;color:var(--ink-3);cursor:not-allowed}
+.combo{position:relative}
+.combo input{width:100%;padding:11px 13px;border:1px solid var(--divider);border-radius:8px;
+  font-family:var(--sans);font-size:1rem;background:#fff;color:var(--ink)}
+.combo input:focus{border-color:var(--teal)}
+.combo input.locked{background:var(--bg-alt);border-color:var(--teal);font-weight:600}
+#p-list{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 5px);margin:0;padding:5px;
+  list-style:none;background:#fff;border:1px solid var(--divider);border-radius:8px;
+  box-shadow:0 6px 18px rgba(0,77,87,.18);max-height:248px;overflow-y:auto}
+#p-list li{padding:10px 12px;border-radius:6px;cursor:pointer;display:flex;align-items:baseline;gap:9px}
+#p-list li .g{margin-left:auto;color:var(--ink-3);font-size:.82rem;font-family:var(--mono)}
+#p-list li[aria-selected="true"],#p-list li:hover{background:var(--bg-alt)}
+#p-list li.none{cursor:default;color:var(--ink-2);font-size:.92rem;display:block}
+#p-list li.none:hover{background:transparent}
+.chosen{display:flex;align-items:center;gap:10px;background:var(--bg-alt);border:1px solid var(--divider);
+  border-left:4px solid var(--teal);border-radius:8px;padding:10px 14px;margin:9px 0 0;font-size:.94rem}
+.chosen b{color:var(--teal-dark)}
+.chosen button{margin-left:auto}
+.plan{list-style:none;padding:0;margin:0}
+.plan li{
+  display:flex;gap:14px;align-items:baseline;padding:11px 0;
+  border-bottom:1px solid var(--divider);
+}
+.plan li:last-child{border-bottom:none}
+.plan .tag{
+  font-family:var(--serif);font-weight:700;color:var(--gold);font-size:.8rem;
+  letter-spacing:.14em;min-width:74px;
+}
+.plan .mins{margin-left:auto;color:var(--ink-3);font-size:.86rem;white-space:nowrap}
+
+/* ---------- assessment chrome ---------- */
+.topbar{
+  position:sticky;top:0;z-index:20;background:var(--teal);color:#fff;
+  box-shadow:0 2px 8px rgba(0,77,87,.2);
+}
+.topbar .wrap{display:flex;align-items:center;gap:16px;padding-top:11px;padding-bottom:11px}
+.topbar .who{font-size:.86rem;color:var(--on-dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar .clock{margin-left:auto;font-variant-numeric:tabular-nums;font-size:.9rem;color:var(--on-dark)}
+.spine{display:flex;gap:4px;padding:0 0 10px}
+.spine .seg{height:5px;flex:1;background:rgba(255,255,255,.22);border-radius:3px;overflow:hidden}
+.spine .seg i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s ease}
+.qmap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:0 0 11px}
+.qmap .grp{display:flex;gap:5px;align-items:center;padding-right:10px;margin-right:3px;
+  border-right:1px solid rgba(255,255,255,.20)}
+.qmap .grp:last-child{border-right:none;padding-right:0;margin-right:0}
+.qmap .gl{font-family:var(--serif);font-size:.66rem;letter-spacing:.15em;color:var(--on-dark);
+  text-transform:uppercase;padding-right:3px}
+.dot{width:26px;height:26px;border-radius:50%;padding:0;line-height:1;
+  border:1.5px solid rgba(255,255,255,.45);background:transparent;color:#fff;
+  font-family:var(--sans);font-size:.7rem;font-weight:600;
+  display:grid;place-items:center;transition:background .12s,transform .12s}
+.dot:hover{background:rgba(255,255,255,.20)}
+.dot.done{background:#fff;border-color:#fff;color:var(--teal-dark)}
+.dot.now{background:var(--gold);border-color:var(--gold);color:#3d2b00;transform:scale(1.14)}
+.dot.practice{border-style:dashed;font-size:.66rem}
+.dot:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px}
+@media (max-width:600px){.dot{width:23px;height:23px;font-size:.64rem}.qmap{gap:4px}
+  .qmap .grp{padding-right:7px;margin-right:1px}}
+.spine .lbl{
+  font-family:var(--serif);font-size:.66rem;letter-spacing:.16em;color:var(--on-dark);
+  text-transform:uppercase;padding-right:6px;align-self:center;
+}
+
+/* ---------- question card ---------- */
+.qwrap{padding:30px 0 120px}
+.eyebrow{
+  font-family:var(--serif);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--teal-mid);margin-bottom:10px;
+}
+.eyebrow b{color:var(--gold);font-weight:700}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:26px 28px;border:1px solid var(--divider)}
+.qtext{font-size:1.12rem;margin:0 0 4px}
+.qnote{color:var(--ink-2);font-size:.94rem;margin:8px 0 0}
+.marks{
+  display:inline-block;background:var(--bg-alt);color:var(--teal-dark);border-radius:999px;
+  padding:3px 11px;font-size:.78rem;font-weight:600;margin-left:8px;vertical-align:2px;
+}
+
+pre.code{
+  background:var(--teal-dark);color:#EAF6F7;font-family:var(--mono);font-size:.95rem;
+  line-height:1.65;padding:16px 18px;border-radius:8px;overflow-x:auto;margin:18px 0;
+  border-left:4px solid var(--gold);
+}
+pre.code .kw{color:var(--gold-light)}
+pre.code .st{color:#9FE0C0}
+pre.code .nu{color:#F7C040}
+pre.code .cm{color:#7FA8AC;font-style:italic}
+
+/* ---------- options ---------- */
+.opts{display:grid;gap:10px;margin-top:20px}
+.opt{
+  display:flex;gap:13px;align-items:flex-start;background:#fff;border:1.5px solid var(--divider);
+  border-radius:var(--r);padding:13px 16px;cursor:pointer;transition:border-color .12s,background .12s;
+  font-size:1rem;
+}
+.opt:hover{background:var(--bg);border-color:var(--teal-mid)}
+.opt input{margin:3px 0 0;accent-color:var(--teal);width:18px;height:18px;flex:none}
+.opt.sel{border-color:var(--teal);background:var(--bg-alt);box-shadow:var(--shadow)}
+.opt .txt{font-family:var(--mono);font-size:.97rem}
+.opt.prose .txt{font-family:var(--sans);font-size:1rem}
+
+/* ---------- parsons ---------- */
+.parsons{margin-top:20px;background:var(--bg);border:1px solid var(--divider);border-radius:var(--r);padding:14px}
+.prow{
+  display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--divider);
+  border-radius:8px;padding:9px 11px;margin-bottom:8px;
+}
+.prow:last-child{margin-bottom:0}
+.prow .pline{flex:1;font-family:var(--mono);font-size:.95rem;white-space:pre;overflow-x:auto}
+.prow .pbtns{display:flex;gap:5px;flex:none}
+.pbtn{
+  border:1px solid var(--divider);background:#fff;color:var(--teal);width:32px;height:32px;
+  border-radius:7px;font-size:1rem;line-height:1;display:grid;place-items:center;padding:0;
+}
+.pbtn:hover:not(:disabled){background:var(--bg-alt)}
+.pbtn:disabled{color:#c4d8da;cursor:default}
+.indent-key{color:var(--ink-3);font-size:.84rem;margin-top:10px}
+
+/* ---------- code editor ---------- */
+.editor{margin-top:18px}
+.editor textarea{
+  width:100%;min-height:170px;font-family:var(--mono);font-size:.98rem;line-height:1.6;
+  padding:14px 16px;border:1.5px solid var(--divider);border-radius:8px;resize:vertical;
+  background:#fff;color:var(--ink);tab-size:4;
+}
+.editor textarea:focus{border-color:var(--teal)}
+.runbar{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.runbar .hint{color:var(--ink-3);font-size:.86rem;margin-left:auto}
+.console{
+  margin-top:12px;background:var(--teal-dark);color:#EAF6F7;font-family:var(--mono);
+  font-size:.93rem;padding:14px 16px;border-radius:8px;white-space:pre-wrap;
+  min-height:52px;border-left:4px solid var(--teal-mid);
+}
+.console.err{border-left-color:#E8734A;color:#FFD9C9}
+.console .muted{color:#7FA8AC}
+
+/* ---------- callout ---------- */
+.callout{
+  background:var(--bg-alt);border-left:4px solid var(--teal);border-radius:8px;
+  padding:14px 18px;margin:18px 0;font-size:.95rem;
+}
+.callout b{color:var(--teal-dark)}
+
+/* ---------- reminder panel ---------- */
+details.help{
+  background:var(--bg-alt);border:1px solid var(--divider);border-left:4px solid var(--teal);
+  border-radius:8px;margin:18px 0 0;
+}
+details.help summary{
+  padding:12px 16px;cursor:pointer;list-style:none;font-weight:600;font-size:.94rem;
+  color:var(--teal-dark);display:flex;align-items:center;gap:10px;
+}
+details.help summary::-webkit-details-marker{display:none}
+details.help summary .tw{
+  display:inline-grid;place-items:center;width:20px;height:20px;flex:none;border-radius:5px;
+  background:var(--teal);color:#fff;font-size:.8rem;line-height:1;transition:transform .15s ease;
+}
+details.help[open] summary .tw{transform:rotate(45deg)}
+details.help summary .free{
+  margin-left:auto;font-weight:400;font-size:.8rem;color:var(--ink-3);
+}
+details.help .hbody{padding:0 16px 16px}
+details.help .hbody .cap{
+  font-family:var(--serif);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal-mid);margin:0 0 8px;
+}
+details.help pre.code{margin:0 0 12px;border-left-color:var(--teal-mid)}
+details.help .hnote{font-size:.92rem;color:var(--ink-2);margin:0}
+.mono{font-family:var(--mono);font-size:.94em}
+/* ---------- nav ---------- */
+.navbar{
+  position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--divider);
+  box-shadow:0 -2px 8px rgba(0,77,87,.08);z-index:25;
+}
+.navbar .wrap{display:flex;align-items:center;gap:12px;padding-top:12px;padding-bottom:12px}
+.navbar .pos{color:var(--ink-3);font-size:.86rem}
+.navbar .grow{margin-left:auto}
+
+/* ---------- review ---------- */
+.grid-review{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px;margin-top:16px}
+.chip{
+  border:1.5px solid var(--divider);background:#fff;border-radius:8px;padding:9px 4px;
+  font-size:.86rem;font-weight:600;color:var(--teal-dark);text-align:center;
+}
+.chip.done{background:var(--teal);color:#fff;border-color:var(--teal)}
+.chip.blank{border-style:dashed;color:var(--ink-3)}
+
+/* ---------- results ---------- */
+.res-hero{background:var(--teal-dark);color:#fff;padding:44px 0 38px}
+.res-hero h1{font-size:2.1rem;margin:0 0 4px}
+.res-hero p{color:var(--on-dark);margin:0}
+.bars{display:grid;gap:16px;margin:26px 0 0}
+.bar{background:#fff;border-radius:var(--r);padding:16px 18px;border:1px solid var(--divider);box-shadow:var(--shadow)}
+.bar .head{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
+.bar .head h3{margin:0;font-size:1rem;color:var(--teal-dark)}
+.bar .head .sc{margin-left:auto;font-family:var(--serif);font-weight:700;color:var(--teal);font-size:1.1rem}
+.bar .track{height:9px;background:var(--bg-alt);border-radius:5px;overflow:hidden}
+.bar .track i{display:block;height:100%;background:var(--teal);border-radius:5px;transition:width .6s ease}
+.bar .track i.low{background:var(--gold)}
+.bar .desc{color:var(--ink-2);font-size:.9rem;margin:9px 0 0}
+
+.flags{margin:26px 0 0}
+.flag{
+  background:#fff;border:1px solid var(--divider);border-left:4px solid var(--gold);
+  border-radius:8px;padding:13px 16px;margin-bottom:10px;
+}
+.flag h4{margin:0 0 4px;font-size:.95rem;color:var(--teal-dark);font-family:var(--serif)}
+.flag p{margin:0;color:var(--ink-2);font-size:.92rem}
+
+details.fb{background:#fff;border:1px solid var(--divider);border-radius:8px;margin-bottom:9px}
+details.fb summary{
+  padding:12px 16px;cursor:pointer;font-weight:600;display:flex;gap:11px;align-items:center;
+  font-size:.95rem;list-style:none;
+}
+details.fb summary::-webkit-details-marker{display:none}
+details.fb summary .mk{
+  width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:none;
+  font-size:.82rem;color:#fff;background:var(--teal);
+}
+details.fb summary .mk.no{background:var(--gold);color:#3d2b00}
+details.fb summary .mk.part{background:var(--teal-mid)}
+details.fb .body{padding:0 16px 16px;font-size:.94rem;color:var(--ink-2)}
+details.fb .body pre{
+  background:var(--bg);border:1px solid var(--divider);border-radius:6px;padding:11px 13px;
+  font-family:var(--mono);font-size:.9rem;overflow-x:auto;color:var(--ink);
+}
+.code-out{
+  width:100%;font-family:var(--mono);font-size:.86rem;padding:11px;border-radius:8px;
+  border:1px solid var(--divider);min-height:110px;background:#fff;color:var(--ink);
+}
+.foot{
+  text-align:center;color:var(--ink-3);font-size:.82rem;padding:34px 0 40px;
+}
+.foot .motto{color:var(--teal-mid)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .hero h1{font-size:2rem}
+  .card,.panel{padding:20px 18px}
+  .navbar .pos{display:none}
+}
+</style>
+</head>
+<body>
+<!-- ══════════ START ══════════ -->
+<section id="s-start" class="screen on">
+ <div class="hero">
+  <div class="wrap">
+    <div class="crest">The Grange School &nbsp;·&nbsp; Hartford, Cheshire</div>
+    <div class="rule"></div>
+    <h1>Computer Science<br>Baseline Assessment</h1>
+    <p class="sub">Year 10 &nbsp;·&nbsp; Logical reasoning, reading code, writing Python</p>
+
+    <div class="panel">
+      <h2>Before you start</h2>
+      <div id="pick-id" class="hidden">
+        <div class="field">
+          <label for="p-search">Your name</label>
+          <div class="combo">
+            <input id="p-search" type="text" autocomplete="off" autocapitalize="words"
+                   spellcheck="false" placeholder="Start typing your name…"
+                   role="combobox" aria-expanded="false" aria-controls="p-list"
+                   aria-autocomplete="list" aria-describedby="p-hint">
+            <ul id="p-list" role="listbox" class="hidden" aria-label="Matching names"></ul>
+          </div>
+          <p class="qnote" id="p-hint" style="margin:7px 0 0">Type a few letters, then tap your name.</p>
+        </div>
+        <button class="btn-ghost btn-sm" id="not-listed" type="button">My name is not on the list</button>
+      </div>
+
+      <div id="type-id">
+        <div class="field">
+          <label for="f-name">Your full name</label>
+          <input id="f-name" type="text" autocomplete="off" placeholder="e.g. Priya Sharma">
+        </div>
+        <div class="field">
+          <label for="f-class">Your class or teaching group</label>
+          <input id="f-class" type="text" autocomplete="off" placeholder="e.g. 10CS/1">
+        </div>
+        <p class="qnote hidden" id="back-to-list" style="margin:-4px 0 14px">
+          <button class="btn-ghost btn-sm" id="use-list" type="button">Back to the list</button>
+        </p>
+      </div>
+      <div class="callout hidden" id="setup-note"></div>
+      <button class="btn" id="btn-begin" disabled>Start the assessment</button>
+      <p class="qnote" id="start-warn">Enter your name and class to begin.</p>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--divider)">
+        <button class="btn-ghost btn-sm" id="btn-pycheck">Check Python works on this device</button>
+        <p class="qnote py-status" style="margin:9px 0 0;font-size:.87rem"></p>
+        <p class="qnote" style="margin:6px 0 0;font-size:.82rem;color:var(--ink-3)">
+          Part C needs Python. It downloads in the background while you do Parts A and B, so you do not
+          have to wait — but it is worth checking now.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>What you'll be asked to do</h2>
+      <ul class="plan">
+        <li><span class="tag">Part A</span><span>Logical reasoning — 8 questions, no code</span><span class="mins">~10 min</span></li>
+        <li><span class="tag">Part B</span><span>Read Python and predict what it prints — 9 questions</span><span class="mins">~13 min</span></li>
+        <li><span class="tag">Practice</span><span>A quick go on the code box. Not marked.</span><span class="mins">~2 min</span></li>
+        <li><span class="tag">Part C</span><span>Write Python — 5 questions</span><span class="mins">~18 min</span></li>
+      </ul>
+      <div class="callout">
+        <b>This is not a test you can fail.</b> It shows your teacher what you already know so
+        lessons start in the right place. Some questions will be beyond you — that is expected
+        and it is fine. Answer what you can and move on.
+      </div>
+      <p class="qnote">
+        You can move backwards and forwards between questions. Nothing is marked until you
+        press <b>Finish and see my results</b> at the end. Work on your own.
+      </p>
+    </div>
+    <p class="motto">E Glande Robur</p>
+  </div>
+ </div>
+</section>
+
+<!-- ══════════ ASSESSMENT ══════════ -->
+<section id="s-quiz" class="screen">
+  <div class="topbar">
+    <div class="wrap" style="display:block">
+      <div style="display:flex;align-items:center;gap:16px;padding:11px 0 9px">
+        <strong class="serif" style="font-size:.95rem" id="t-part">Part A</strong>
+        <span class="who" id="t-who"></span>
+        <span class="clock" id="t-clock">0:00</span>
+      </div>
+      <div class="spine">
+        <span class="lbl">A</span><span class="seg"><i id="sp-A"></i></span>
+        <span class="lbl" style="padding-left:6px">B</span><span class="seg"><i id="sp-B"></i></span>
+        <span class="lbl" style="padding-left:6px">C</span><span class="seg"><i id="sp-C"></i></span>
+      </div>
+      <div class="qmap" id="qmap" role="toolbar" aria-label="Jump to a question"></div>
+    </div>
+  </div>
+
+  <div class="wrap qwrap">
+    <div id="q-host"></div>
+  </div>
+
+  <div class="navbar">
+    <div class="wrap">
+      <button class="btn-ghost" id="nav-prev">Back</button>
+      <span class="pos" id="nav-pos"></span>
+      <span class="grow"></span>
+      <button class="btn" id="nav-next">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ REVIEW ══════════ -->
+<section id="s-review" class="screen">
+  <div class="hero" style="min-height:auto;padding-bottom:40px">
+    <div class="wrap">
+      <div class="crest">Final check</div>
+      <div class="rule"></div>
+      <h1 style="font-size:2.1rem">Before you finish</h1>
+      <p class="sub">Anything with a dashed outline has no answer yet. Tap it to go back.</p>
+
+      <div class="panel">
+        <h2>Your answers</h2>
+        <div class="grid-review" id="review-grid"></div>
+        <p class="qnote" id="review-count"></p>
+      </div>
+
+      <button class="btn-gold btn" id="btn-submit">Finish and see my results</button>
+      <button class="btn-ghost" id="btn-back-quiz" style="color:#fff;border-color:rgba(255,255,255,.4)">Keep working</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FINISH ══════════ -->
+<section id="s-results" class="screen">
+  <div class="hero" style="min-height:100vh">
+    <div class="wrap">
+      <div class="crest">Assessment complete</div>
+      <div class="rule"></div>
+      <h1 id="r-name">Thank you</h1>
+      <p class="sub" id="r-meta"></p>
+
+      <div class="panel hidden" id="send-box"></div>
+
+      <div class="panel" id="manual-box">
+        <h2>One last step</h2>
+        <p class="qnote" style="margin-top:0">
+          Press <b>Copy my results code</b>, then paste it into the box your teacher has set up.
+          Your work is not saved until you do this.
+        </p>
+        <textarea class="code-out" id="r-code" readonly aria-label="Your results code"></textarea>
+        <div class="runbar">
+          <button class="btn" id="btn-copy">Copy my results code</button>
+          <button class="btn-ghost" id="btn-dl">Download as a file</button>
+          <span class="hint" id="copy-note"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>What happens next</h2>
+        <p class="qnote" style="margin-top:0">
+          Your teacher will go through this with you and give you a short report. There is nothing to
+          work out from this screen &mdash; the useful part is the conversation you will have about it.
+        </p>
+        <div class="callout" id="r-effort"></div>
+      </div>
+
+      <p class="motto">E Glande Robur</p>
+    </div>
+  </div>
+</section>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   THE GRANGE SCHOOL · Y10 Computer Science baseline assessment
+   Self-contained. Python runs in the pupil's own browser (Pyodide).
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ---------- misconception registry (keys are stable — the dashboard groups on them) ---------- */
+const FLAGS = {
+  FLOW_COND:  ["Following a conditional rule step by step",
+               "Lost track of a branching instruction. Practise dry-running flowcharts before writing code."],
+  BOUNDARY:   ["Boundary conditions",
+               "Treats \u201cat least 95\u201d or \u201cno more than 2\u201d as excluding the value itself. This becomes > vs >= errors in code."],
+  BOOLEAN:    ["AND / OR logic",
+               "Struggles to combine conditions. Needs explicit truth-table work before writing compound if statements."],
+  SEQUENCE:   ["Spotting a rule in a pattern",
+               "Did not find the generating rule. Worth a short pattern-and-rule warm-up routine."],
+  DEDUCE:     ["Eliminating possibilities",
+               "Did not use given facts to rule options out \u2014 the same reasoning behind tracing and debugging."],
+  SEARCH_EFF: ["Comparing methods for efficiency",
+               "No intuition yet that halving beats checking one by one. Pre-teach before searching algorithms."],
+  TRACE_LOOP: ["Accumulating inside a loop",
+               "Cannot yet track a running total across repeated steps. Fix before any loop programming."],
+  VAR_HISTORY:["What a variable holds",
+               "Believes a variable remembers earlier values, or that y follows x after y = x. Very common and very disruptive."],
+  ACCUM:      ["Updating a variable using itself",
+               "total = total + 4 is not read as replace-with-new-value. Blocks all counter and total code."],
+  STR_NUM:    ["Strings versus numbers",
+               "Expects \"3\" + \"4\" to be 7. Needs explicit type work, especially around input()."],
+  ELIF:       ["How elif chains run",
+               "Thinks every branch is checked. Does not yet know the chain stops at the first true condition, so later branches look unreachable."],
+  RANGE_OFF1: ["The range() stop value",
+               "Off by one \u2014 expects range(1, 4) to include 4. Classic and quick to fix with a tracing table."],
+  WHILE_TERM: ["When a while loop stops",
+               "Cannot predict the exit value. Links directly to infinite loops when they write their own."],
+  INDEX_ZERO: ["List positions start at 0",
+               "Counts list items from 1. Will cause silent wrong answers rather than errors."],
+  TRACE_ONLY: ["Tracing without understanding",
+               "Can follow code line by line but cannot say what it is for. Needs \u201cexplain in plain English\u201d tasks, not more tracing."],
+  SYNTAX:     ["Getting Python to run at all",
+               "Code did not execute. Check whether this is typing and syntax rather than thinking \u2014 compare against Parts A and B."],
+  WRITE_LOOP: ["Writing a loop from scratch",
+               "Can read loops but cannot yet produce one. Use Parsons problems and code completion before blank-page tasks."]
+};
+
+/* ---------- syntax highlighter ---------- */
+function hl(src){
+  const esc = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const re = /("[^"\n]*"|'[^'\n]*')|(#[^\n]*)|(\b\d+\b)|(\b(?:for|while|if|elif|else|in|not|and|or|True|False|None|def|return|print|range|input|int|str|float|len|append|sum|max|min)\b)/g;
+  let out=[], last=0, m;
+  while((m = re.exec(src))){
+    out.push(esc(src.slice(last, m.index)));
+    const cls = m[1] ? 'st' : m[2] ? 'cm' : m[3] ? 'nu' : 'kw';
+    out.push('<span class="'+cls+'">'+esc(m[0])+'</span>');
+    last = re.lastIndex;
+  }
+  out.push(esc(src.slice(last)));
+  return out.join('');
+}
+
+/* ---------- output normalisation for auto-marking ---------- */
+function normLines(s){
+  return (s||'').replace(/\r/g,'').split('\n').map(l=>l.trim()).filter(l=>l.length);
+}
+function hasNum(out, val){
+  const re = new RegExp('(^|[^\\d.-])' + val + '([^\\d.]|$)');
+  return re.test((out||'').replace(/\n/g,' '));
+}
+function saysPhrase(out, want, notWant){
+  const s = (out||'').toLowerCase();
+  if (notWant && s.includes(notWant)) return false;
+  return s.includes(want);
+}
+function numbersIn(out){
+  return normLines(out).map(l=>{
+    const m = l.match(/-?\d+/);
+    return m ? parseInt(m[0],10) : null;
+  }).filter(v=>v!==null);
+}
+
+/* ═══════════════════ QUESTION BANK ═══════════════════ */
+const Q = [
+
+/* ───── PART A · logical reasoning ───── */
+{id:'A1', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'A machine follows these steps in order: start with 6; add 4; if the result is greater than 12, subtract 5, otherwise double it; output the result. What does it output?',
+ opts:['5','10','15','20'], ans:3, flag:'FLOW_COND',
+ why:'6 + 4 = 10. Ten is <em>not</em> greater than 12, so the machine takes the second path and doubles it: 10 \u00d7 2 = 20. The trap is doing both steps, or assuming the first branch always runs.'},
+
+{id:'A2', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'A certificate is printed for any pupil with attendance of <b>at least 95%</b> and <b>no more than 2</b> late marks. Who gets a certificate?',
+ opts:['Amir \u2014 96% attendance, 3 lates','Beth \u2014 94% attendance, 0 lates','Cara \u2014 95% attendance, 2 lates','Dev \u2014 99% attendance, 5 lates'],
+ ans:2, flag:'BOUNDARY',
+ why:'\u201cAt least 95\u201d includes 95, and \u201cno more than 2\u201d includes 2 \u2014 so Cara meets both rules exactly on the boundary. Amir and Dev have too many lates; Beth\u2019s attendance is below 95%. In Python this is the difference between <code>&gt;</code> and <code>&gt;=</code>.'},
+
+{id:'A3', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'The rule is: <b>you may enter if you are a member OR you have a ticket.</b> Who is refused entry?',
+ opts:['Someone who is a member but has no ticket','Someone who has a ticket but is not a member','Someone who is not a member and has no ticket','Nobody is refused'],
+ ans:2, flag:'BOOLEAN',
+ why:'OR needs only one condition to be true, so the first two people get in. Only someone failing <em>both</em> conditions is refused. A common error is reading OR as if it meant AND.'},
+
+{id:'A4', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'What number comes next in this sequence?<br><span style="font-family:var(--mono);font-size:1.05rem">2, 5, 11, 23, 47, &hellip;</span>',
+ opts:['58','71','94','95'], ans:3, flag:'SEQUENCE',
+ why:'Each term is <em>double the previous term, plus one</em>: 2\u21925\u219211\u219223\u219247. So 47 \u00d7 2 + 1 = 95. Choosing 94 means spotting the doubling but missing the +1.'},
+
+{id:'A5', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'Priya, Sam and Tom each study one different subject: Art, Biology or Chemistry. Priya does not study Art. Sam studies Chemistry. Who studies Art?',
+ opts:['Priya','Sam','Tom','It cannot be worked out'], ans:2, flag:'DEDUCE',
+ why:'Sam takes Chemistry, so Sam is out. Priya is ruled out directly. Only Tom is left, so the answer <em>can</em> be worked out. This is elimination \u2014 the same reasoning used to narrow down a bug.'},
+
+{id:'A6', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'You need to find one name in an alphabetically ordered list of 1,000 names. In the worst case, which method needs the fewest checks?',
+ opts:['Check each name in turn, starting from the beginning','Open the list in the middle, then repeatedly halve the section still to search','Check names at random until you find it','All three methods take the same number of checks'],
+ ans:1, flag:'SEARCH_EFF',
+ why:'Halving needs about 10 checks for 1,000 names; going one by one needs up to 1,000. This is binary search versus linear search, and the gap widens fast as the list grows.'},
+
+{id:'A7', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'Follow these instructions. Set <b>total</b> to 0 and <b>count</b> to 0. Then repeat this pair of steps until <b>count</b> equals 4: add 3 to <b>total</b>, then add 1 to <b>count</b>. What is <b>total</b> at the end?',
+ opts:['3','4','12','15'], ans:2, flag:'TRACE_LOOP',
+ why:'The pair of steps runs four times, adding 3 each time: 3, 6, 9, 12. Answering 15 means running the loop one extra time; answering 4 means reporting <b>count</b> instead of <b>total</b>.'},
+
+{id:'A8', sec:'A', marks:1, type:'mcq', prose:true,
+ text:'A door unlocks only when the keycard is valid <b>AND</b> (it is a weekday <b>OR</b> the manager override is on). The keycard is valid, it is Sunday, and the override is off. Does the door unlock?',
+ opts:['Yes','No','Only if the keycard is scanned twice','There is not enough information'],
+ ans:1, flag:'BOOLEAN',
+ why:'The bracket is false \u2014 it is not a weekday and the override is off. AND needs both sides true, so a valid keycard alone is not enough. Brackets group conditions in Python exactly the same way.'},
+
+/* ───── PART B · reading code ───── */
+{id:'B1', sec:'B', marks:1, type:'mcq',
+ code:'x = 5\ny = x\nx = 10\nprint(y)',
+ text:'What is printed?', opts:['10','5','15','Error'], ans:1, flag:'VAR_HISTORY',
+ why:'<code>y = x</code> copies the <em>value</em> 5 into y at that moment. Changing x afterwards does not reach back and change y, so y is still 5. Answering 10 means treating y as permanently linked to x.'},
+
+{id:'B2', sec:'B', marks:1, type:'mcq',
+ code:'total = 0\ntotal = total + 4\ntotal = total + 6\nprint(total)',
+ text:'What is printed?', opts:['0','4','6','10'], ans:3, flag:'ACCUM',
+ why:'Read each line right to left: work out the right-hand side, then store it back in <b>total</b>. So 0+4 = 4, then 4+6 = 10. This pattern is behind every counter and running total you will write.'},
+
+{id:'B3', sec:'B', marks:1, type:'mcq',
+ code:'a = "3"\nb = "4"\nprint(a + b)',
+ text:'What is printed?', opts:['7','34','3 4','Error'], ans:1, flag:'STR_NUM',
+ why:'The quote marks make these <em>text</em>, not numbers, and + joins text end to end, giving 34. This matters because <code>input()</code> always gives you text \u2014 which is why you often need <code>int()</code>.'},
+
+{id:'B4', sec:'B', marks:1, type:'mcq',
+ code:'score = 72\nif score > 50:\n    print("Pass")\nelif score > 70:\n    print("Merit")\nelse:\n    print("Fail")',
+ text:'What is printed?', opts:['Pass','Merit','Pass then Merit','Fail'], ans:0, flag:'ELIF',
+ why:'Python checks the conditions in order and stops at the first true one. 72 &gt; 50 is true, so it prints Pass and skips the rest \u2014 the Merit branch can never be reached. The fix is to test the strictest condition first.'},
+
+{id:'B5', sec:'B', marks:1, type:'mcq',
+ code:'for i in range(1, 4):\n    print(i * 2)',
+ text:'What is printed?', opts:['2, 4, 6 and 8','2, 4 and 6','1, 2 and 3','0, 2, 4 and 6'], ans:1, flag:'RANGE_OFF1',
+ why:'<code>range(1, 4)</code> gives 1, 2, 3 \u2014 it stops <em>before</em> 4 and never includes it. Doubling each gives 2, 4, 6. Expecting 8 is the off-by-one error.'},
+
+{id:'B6', sec:'B', marks:1, type:'mcq',
+ code:'n = 10\nwhile n > 4:\n    n = n - 3\nprint(n)',
+ text:'What is printed?', opts:['7','4','1','It never stops'], ans:1, flag:'WHILE_TERM',
+ why:'n goes 10 \u2192 7 \u2192 4. At 4 the condition <code>n &gt; 4</code> is false, so the loop stops and 4 is printed. Answering 1 means running the loop one time too many.'},
+
+{id:'B7', sec:'B', marks:1, type:'mcq',
+ code:'colours = ["red", "green", "blue", "yellow"]\nprint(colours[2])',
+ text:'What is printed?', opts:['red','green','blue','yellow'], ans:2, flag:'INDEX_ZERO',
+ why:'Positions start at 0, so red is [0], green is [1] and blue is [2]. Answering green means counting from 1. This gives you a wrong answer rather than an error message, so it is easy to miss.'},
+
+{id:'B8a', sec:'B', marks:1, type:'mcq',
+ code:'values = [3, 9, 2, 7]\nbiggest = values[0]\nfor v in values:\n    if v > biggest:\n        biggest = v\nprint(biggest)',
+ text:'What is printed?', opts:['2','3','7','9'], ans:3, flag:'TRACE_LOOP',
+ why:'<b>biggest</b> starts at 3, is replaced by 9, then never beaten by 2 or 7. So 9 is printed. Answering 7 usually means reporting the last item checked rather than the largest kept.'},
+
+{id:'B8b', sec:'B', marks:1, type:'mcq', prose:true, sameCodeAs:'B8a',
+ text:'Looking at the same program \u2014 which sentence best describes what it does?',
+ opts:['Prints every number in the list','Counts how many numbers are in the list','Finds the largest number in the list','Prints the last number in the list'],
+ ans:2, flag:'TRACE_ONLY',
+ why:'It keeps the best value seen so far and replaces it whenever something bigger appears \u2014 so it finds the largest number. Being able to <em>trace</em> code and being able to <em>say what it is for</em> are different skills, and this question separates them.'},
+
+/* ───── PART C · writing Python ───── */
+{id:'C1', help:{title:"A while loop, doing a different job", code:"size = 1\nwhile size < 20:\n    print(size)\n    size = size * 2\nprint(\"Too big\")", note:"This one doubles a number until it passes 20, printing 1, 2, 4, 8, 16 and then <i>Too big</i>. Notice three things: the condition sits on the <span class=\"mono\">while</span> line; the lines that repeat are pushed in; and the line that runs once at the end is <b>not</b> pushed in."}, sec:'C', marks:3, type:'parsons',
+ text:'Put these five lines in the right order <b>and</b> set the indentation, so the program counts down from 5 and then prints <span style="font-family:var(--mono)">Go!</span>',
+ note:'Use \u2191 \u2193 to move a line, and \u2190 \u2192 to change how far it is indented. The output should be 5, 4, 3, 2, 1, then Go! \u2014 each on its own line.',
+ lines:[
+   {k:'p3', t:'while count > 0:'},
+   {k:'p1', t:'print("Go!")'},
+   {k:'p5', t:'print(count)'},
+   {k:'p4', t:'count = 5'},
+   {k:'p2', t:'count = count - 1'}
+ ],
+ order:['p4','p3','p5','p2','p1'],
+ indent:[0,0,1,1,0],
+ expect:'5\n4\n3\n2\n1\nGo!'},
+
+{id:'C2', help:{title:"Getting a number from the user, doing a different job", code:"kilometres = int(input())\nprint(kilometres - 1)", note:"This asks for a distance and prints one less. <span class=\"mono\">input()</span> always hands back <i>text</i>, so <span class=\"mono\">int()</span> turns it into a number you can do arithmetic with. Your question needs a different calculation."}, sec:'C', marks:3, type:'code',
+ text:'Write a program that asks the user for a number, then prints that number multiplied by 3.',
+ note:'Use <span style="font-family:var(--mono)">input()</span> to get the number. Remember that input gives you text, so you will need to turn it into a number.',
+ tests:[{in:['4'],label:'The user types 4',want:'12'},
+        {in:['0'],label:'The user types 0',want:'0'},
+        {in:['10'],label:'The user types 10',want:'30'}],
+ mark(out, err, code){
+   let m=0, per=[];
+   for (const t of this.tests){
+     const r = out[this.tests.indexOf(t)];
+     const ok = !r.err && hasNum(r.out, t.want);
+     if (ok) m++;
+     per.push({label:t.label, want:t.want, got:r.err ? r.err : (r.out.trim()||'(nothing printed)'), ok});
+   }
+   let flag = null;
+   if (m === 0){
+     const first = out[0];
+     if (first.err) flag = 'SYNTAX';
+     else if (/^4{3}\s*$/.test(first.out)) flag = 'STR_NUM';   // printed 444 \u2014 repeated the text
+   }
+   return {marks:m, per, flag};
+ },
+ why:'One working answer:<pre>number = int(input())\nprint(number * 3)</pre>The <code>int()</code> is the part most people miss \u2014 without it Python repeats the text three times instead of multiplying.'},
+
+{id:'C3', help:{title:"Choosing between two messages, on a different topic", code:"colour = input()\nif colour == \"red\":\n    print(\"Stop\")\nelse:\n    print(\"Go\")", note:"This prints one message or the other, never both. The comparisons you can use are:\n<span class=\"mono\">==</span> the same as &nbsp;\u00b7&nbsp; <span class=\"mono\">&gt;</span> more than &nbsp;\u00b7&nbsp; <span class=\"mono\">&lt;</span> less than &nbsp;\u00b7&nbsp; <span class=\"mono\">&gt;=</span> more than or the same as &nbsp;\u00b7&nbsp; <span class=\"mono\">&lt;=</span> less than or the same as.\nWorking out which one your question needs is the part that counts."}, sec:'C', marks:4, type:'code',
+ text:'Write a program that asks the user for their age. If they are <b>16 or over</b>, print <span style="font-family:var(--mono)">You can leave school.</span> Otherwise print <span style="font-family:var(--mono)">You must stay in education.</span>',
+ note:'Type the two messages exactly as shown. Think carefully about what happens at exactly 16.',
+ tests:[{in:['15'],label:'Age 15',want:'You must stay in education.'},
+        {in:['16'],label:'Age 16 (the boundary)',want:'You can leave school.'},
+        {in:['17'],label:'Age 17',want:'You can leave school.'},
+        {in:['20'],label:'Age 20',want:'You can leave school.'}],
+ mark(out, err, code){
+   let m=0, per=[];
+   const A='you can leave school', B='you must stay in education';
+   this.tests.forEach((t,i)=>{
+     const r = out[i];
+     const wantA = t.want.toLowerCase().startsWith('you can');
+     const ok = !r.err && (wantA ? saysPhrase(r.out,A,B) : saysPhrase(r.out,B,A));
+     if (ok) m++;
+     per.push({label:t.label, want:t.want, got:r.err ? r.err : (r.out.trim()||'(nothing printed)'), ok});
+   });
+   let flag = null;
+   if (out.every(r=>r.err)) flag = 'SYNTAX';
+   else if (m === 3 && !per[1].ok) flag = 'BOUNDARY';   // only the exact-16 case failed \u2192 > instead of >=
+   else if (m < 4) flag = 'BOOLEAN';                    // wrong branch, or no else at all
+   return {marks:m, per, flag};
+ },
+ why:'One working answer:<pre>age = int(input())\nif age &gt;= 16:\n    print("You can leave school.")\nelse:\n    print("You must stay in education.")</pre>If only the age-16 test failed, you used <code>&gt;</code> instead of <code>&gt;=</code>.'},
+
+{id:'C4', help:{title:"A for loop, doing a different job", code:"for i in range(0, 3):\n    print(\"Hello\")", note:"This prints <i>Hello</i> three times. <span class=\"mono\">range(0, 3)</span> counts 0, 1, 2 &mdash; it stops <b>before</b> the second number. Here the counter <span class=\"mono\">i</span> is never used inside the loop; in your question you will need to use it."}, sec:'C', marks:4, type:'code',
+ text:'Use a loop to print the 7 times table, from 7 up to and including 70, with each number on its own line.',
+ note:'Your program should print exactly ten lines: 7, 14, 21, and so on up to 70. Do not ask the user for anything.',
+ tests:[{in:[],label:'Run the program',want:'7, 14, 21, 28, 35, 42, 49, 56, 63, 70'}],
+ mark(out, err, code){
+   const r = out[0];
+   const nums = r.err ? [] : numbersIn(r.out);
+   const target = [7,14,21,28,35,42,49,56,63,70];
+   let m=0, per=[];
+   const c1 = nums.length >= 8;
+   const c2 = nums[0] === 7;
+   const c3 = nums[nums.length-1] === 70;
+   const c4 = nums.length === 10 && target.every((v,i)=>nums[i]===v);
+   [c1,c2,c3,c4].forEach(c=>{ if(c) m++; });
+   per.push({label:'Printed a list of numbers', want:'at least 8 lines', got:r.err ? r.err : (nums.length+' number(s)'), ok:c1});
+   per.push({label:'Starts at 7', want:'7', got:nums.length?String(nums[0]):'\u2014', ok:c2});
+   per.push({label:'Ends at 70', want:'70', got:nums.length?String(nums[nums.length-1]):'\u2014', ok:c3});
+   per.push({label:'Whole table correct', want:target.join(', '), got:nums.join(', ')||'(nothing printed)', ok:c4});
+   return {marks:m, per, flag: (!c1 && !r.err) ? 'WRITE_LOOP' : (r.err ? 'SYNTAX' : null)};
+ },
+ why:'Two working answers:<pre>for i in range(1, 11):\n    print(i * 7)</pre><pre>for n in range(7, 71, 7):\n    print(n)</pre>The usual slip is stopping at 63 \u2014 <code>range</code> stops <em>before</em> its second number.'},
+
+{id:'C5', help:{title:"Building up an answer across a list, doing a different job", code:"words = [\"red\", \"amber\", \"green\"]\ncount = 0\nfor w in words:\n    count = count + 1\nprint(count)", note:"This counts how many items are in the list and prints 3. The shape is: set a starting value <b>before</b> the loop, change it a little on every pass, then print it <b>after</b> the loop has finished. Your question needs a different thing added on each pass."}, sec:'C', marks:4, type:'code', stretch:true,
+ text:'The list below is already written for you. Add code that adds up all the numbers in the list and prints the total.',
+ note:'This one is meant to stretch you. If you cannot finish it, leave what you have \u2014 partly-right code still tells your teacher something useful.',
+ starter:'scores = [12, 45, 33, 8]\n',
+ tests:[{in:[],label:'Run the program',want:'98'}],
+ mark(out, err, code){
+   const r = out[0];
+   if (r.err) return {marks:0, per:[{label:'Run the program', want:'98', got:r.err, ok:false}], flag:'SYNTAX'};
+   const ok = hasNum(r.out, 98);
+   const numeric = numbersIn(r.out).length > 0;
+   const m = ok ? 4 : (numeric ? 1 : 0);
+   return {marks:m, per:[{label:'Prints the total', want:'98', got:r.out.trim()||'(nothing printed)', ok}],
+           flag: ok ? null : 'WRITE_LOOP'};
+ },
+ why:'Two working answers:<pre>total = 0\nfor s in scores:\n    total = total + s\nprint(total)</pre><pre>print(sum(scores))</pre>The loop version is the one worth being able to write \u2014 it is the same running-total pattern as question B2.'}
+];
+
+const SECTIONS = {
+  A:{name:'Part A', full:'Logical reasoning', desc:'Thinking in rules, conditions and steps \u2014 without any code.'},
+  B:{name:'Part B', full:'Reading code', desc:'Following Python line by line and predicting what it prints.'},
+  C:{name:'Part C', full:'Writing code', desc:'Producing working Python from a description.'}
+};
+/* ═══════════════════════════════════════════════════════════════
+   SUBMISSION SETTINGS
+   Leave these blank and pupils copy a code by hand (no setup needed).
+   Fill them in and their work is sent straight to your Google Sheet.
+   ═══════════════════════════════════════════════════════════════ */
+const SUBMIT = {
+  url: 'https://script.google.com/macros/s/AKfycbwRryynFy1ikdQfAZ8rZmmuBh6Fl2igK0I7tgZfVjxkwuE9y-SQTYja9xGGIeBZEzrF/exec',   // your Apps Script /exec address
+  key: 'grange-write'    // your WRITE_KEY
+};
+
+/* Class lists come from the Classes tab of your Google Sheet, so you can add,
+   rename and remove pupils there without touching this file.
+   If you are not using the Apps Script, type them in here instead, e.g.
+     '10CS/1': ['Aisha R.', 'Ben O.'],
+   Leave it empty and pupils type their own name. */
+const CLASS_LIST = {
+};
+
+/* ═══════════════════ STATE ═══════════════════ */
+const PYV = '0.26.4';
+const state = {
+  name:'', group:'', started:null, elapsed:0,
+  answers:{},        // qid -> index | {keys,ind} | source string
+  help:{},           // qid -> true once the pupil opened the reminder
+  ran:{},            // qid -> last console result (display only)
+  idx:0, result:null
+};
+const ITEMS = [];    // flattened steps: questions + the practice step
+Q.filter(q=>q.sec==='A').forEach(q=>ITEMS.push(q));
+Q.filter(q=>q.sec==='B').forEach(q=>ITEMS.push(q));
+ITEMS.push({id:'PRACTICE', sec:'C', type:'practice', marks:0});
+Q.filter(q=>q.sec==='C').forEach(q=>ITEMS.push(q));
+
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ═══════════════════ PYTHON RUNTIME ═══════════════════ */
+let pyodide = null, pyState = 'idle', pyErr = '', pySince = 0;
+
+/* Two hosts, because school filters often allow one and not the other. */
+const PY_SOURCES = [
+  {name:'jsDelivr', index:'https://cdn.jsdelivr.net/pyodide/v'+PYV+'/full/'},
+  {name:'unpkg',    index:'https://unpkg.com/pyodide@'+PYV+'/'}
+];
+
+function withTimeout(p, ms, msg){
+  let t;
+  return Promise.race([
+    Promise.resolve(p).finally(()=>clearTimeout(t)),
+    new Promise((_,rej)=>{ t = setTimeout(()=>rej(new Error(msg)), ms); })
+  ]);
+}
+
+function loadScriptOnce(url){
+  if (window.loadPyodide) return Promise.resolve();
+  return withTimeout(new Promise((res, rej)=>{
+    const s = document.createElement('script');
+    s.src = url;
+    s.onload = res;
+    s.onerror = () => rej(new Error('the script was blocked'));
+    document.head.appendChild(s);
+  }), 15000, 'the download did not start');
+}
+
+async function loadPy(){
+  if (pyState === 'loading' || pyState === 'ready') return;
+  pyState = 'loading'; pyErr = ''; pySince = Date.now();
+  paintPyStatus();
+  clearInterval(loadPy._tick);
+  loadPy._tick = setInterval(paintPyStatus, 1000);
+
+  for (const src of PY_SOURCES){
+    try{
+      await loadScriptOnce(src.index + 'pyodide.js');
+      pyodide = await withTimeout(loadPyodide({indexURL: src.index}), 90000, 'it timed out');
+      pyodide.runPython(RUNNER_DEF);
+      pyState = 'ready';
+      clearInterval(loadPy._tick);
+      paintPyStatus();
+      return;
+    }catch(e){
+      pyErr = e && e.message ? e.message : 'unknown error';
+      console.warn('Pyodide failed via ' + src.name + ':', e);
+    }
+  }
+  pyState = 'failed';
+  clearInterval(loadPy._tick);
+  paintPyStatus();
+}
+
+const RUNNER_DEF = `
+import sys, io, builtins, json
+
+def __grange_run(src, ins_json):
+    ins = json.loads(ins_json)
+    idx = [0]
+    def fake_input(prompt=""):
+        if idx[0] < len(ins):
+            v = ins[idx[0]]; idx[0] += 1; return v
+        raise EOFError("Your program asked for more input than this question provides.")
+    steps = [0]
+    def tracer(frame, event, arg):
+        steps[0] += 1
+        if steps[0] > 400000:
+            raise TimeoutError("Your program ran for too long. Check that your loop is able to stop.")
+        return tracer
+    real_input = builtins.input
+    builtins.input = fake_input
+    buf = io.StringIO()
+    old = sys.stdout
+    sys.stdout = buf
+    err = None
+    try:
+        code = compile(src, "your program", "exec")
+        sys.settrace(tracer)
+        exec(code, {"__name__": "__main__"})
+    except SyntaxError as e:
+        err = "SyntaxError on line " + str(e.lineno) + ": " + str(e.msg)
+    except EOFError as e:
+        err = str(e)
+    except TimeoutError as e:
+        err = str(e)
+    except Exception as e:
+        err = type(e).__name__ + ": " + str(e)
+    finally:
+        sys.settrace(None)
+        sys.stdout = old
+        builtins.input = real_input
+    return json.dumps({"out": buf.getvalue(), "err": err})
+`;
+
+async function runPy(src, inputs){
+  if (pyState !== 'ready') return {out:'', err:'Python is not ready yet.'};
+  try{
+    const fn = pyodide.globals.get('__grange_run');
+    const raw = fn(src, JSON.stringify(inputs || []));
+    fn.destroy();
+    return JSON.parse(raw);
+  }catch(e){
+    return {out:'', err:'Could not run your code: ' + e.message};
+  }
+}
+
+function paintPyStatus(){
+  const secs = pySince ? Math.round((Date.now()-pySince)/1000) : 0;
+  $$('.py-status').forEach(el=>{
+    if (pyState === 'ready'){
+      el.textContent = 'Python is ready'; el.style.color = 'var(--teal-mid)';
+    } else if (pyState === 'failed'){
+      el.innerHTML = 'Python could not load (' + esc(pyErr) + '). ' +
+        '<button class="btn-ghost btn-sm py-retry" style="margin-left:6px">Try again</button>';
+      el.style.color = '#B4531F';
+    } else if (pyState === 'loading'){
+      el.textContent = secs > 25
+        ? 'Still downloading Python\u2026 ' + secs + 's. Slow connections can take a minute.'
+        : 'Downloading Python\u2026 ' + secs + 's (about 10\u201330 seconds the first time)';
+      el.style.color = 'var(--ink-3)';
+    } else {
+      el.textContent = 'Python has not started yet'; el.style.color = 'var(--ink-3)';
+    }
+  });
+  $$('.py-retry').forEach(b=>b.onclick = ()=>{ pyState='idle'; loadPy(); });
+  $$('.run-btn').forEach(b=>{ b.disabled = pyState !== 'ready'; });
+}
+
+/* ═══════════════════ WHO IS TAKING THIS ═══════════════════ */
+let ROSTER = null;              // { group: [names] } once loaded
+let FLAT = [];                  // flattened and searchable
+let shown = [], active = -1;    // current suggestions
+let picked = null;              // the pupil's confirmed entry
+let rosterState = {configured:false, ok:false, why:'', groups:0, names:0, url:''};
+let mode = 'typed';             // 'picked' or 'typed'
+
+function jsonp(url, cb){
+  const name = '__grange_r_' + Math.random().toString(36).slice(2);
+  let done = false;
+  const script = document.createElement('script');
+  const finish = (err, data)=>{
+    if (done) return; done = true;
+    delete window[name];
+    if (script.parentNode) script.parentNode.removeChild(script);
+    cb(err, data);
+  };
+  window[name] = data => finish(null, data);
+  script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + name;
+  script.onerror = () => finish(new Error('unreachable'));
+  document.head.appendChild(script);
+  setTimeout(()=>finish(new Error('timed out')), 12000);
+}
+
+function useRoster(groups){
+  const names = Object.keys(groups || {});
+  if (!names.length) return false;
+  ROSTER = groups;
+  FLAT = [];
+  names.sort().forEach(g => (groups[g]||[]).forEach(n => {
+    const clean = (n + ' ' + g).toLowerCase().replace(/[.,'\u2019]/g,'');
+    /* Initials come from the NAME only, and must be letters \u2014 otherwise the
+       digit in a group like 10CS/1 acts as an initial and matches everyone. */
+    const initials = n.toLowerCase().replace(/[.,'\u2019]/g,'').split(/\s+/)
+      .filter(w => w.length <= 2 && /^[a-z]+$/.test(w));
+    FLAT.push({ name:n, group:g, hay:clean, initials:initials });
+  }));
+  if (!FLAT.length) return false;
+  rosterState.ok = true;
+  rosterState.groups = names.length;
+  rosterState.names = FLAT.length;
+  mode = 'picked';
+  $('#pick-id').classList.remove('hidden');
+  $('#type-id').classList.add('hidden');
+  return true;
+}
+
+function loadRoster(){
+  if (Object.keys(CLASS_LIST).length){
+    rosterState.configured = true; rosterState.url = 'the list inside this file';
+    if (!useRoster(CLASS_LIST)) rosterState.why = 'the CLASS_LIST in this file has no names in it';
+    paintSetup(); return;
+  }
+  if (!SUBMIT.url || !SUBMIT.key){
+    rosterState.why = 'no address or key has been filled in';
+    paintSetup(); return;                            // not configured: pupils type
+  }
+  rosterState.configured = true;
+  rosterState.url = SUBMIT.url;
+  jsonp(SUBMIT.url + '?roster=1&key=' + encodeURIComponent(SUBMIT.key), (err, data)=>{
+    if (err) rosterState.why = 'the address could not be reached (' + err.message + ')';
+    else if (!data || !data.ok) rosterState.why = 'the script replied: ' + ((data && data.error) || 'no answer');
+    else if (!useRoster(data.groups)) rosterState.why = 'the script answered, but the Classes tab has no usable rows';
+    /* Never block a pupil over a register problem \u2014 fall back to typing. */
+    if (!rosterState.ok) console.warn('Register unavailable:', rosterState.why, err || data);
+    paintSetup();
+    checkStart();
+  });
+}
+
+/* A note for whoever set this up. Pupils only see it if something is wrong,
+   and adding ?setup=1 to the address shows the full picture. */
+function paintSetup(){
+  const box = $('#setup-note');
+  const verbose = /[?&]setup=1/.test(location.search);
+  if (!box) return;
+  if (rosterState.ok && !verbose){ box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  if (rosterState.ok){
+    box.className = 'callout';
+    box.innerHTML = '<b>Set-up check.</b> Class list loaded: ' + rosterState.names +
+      ' names across ' + rosterState.groups + ' group' + (rosterState.groups===1?'':'s') + '. ' +
+      'First few: ' + esc(FLAT.slice(0,4).map(p=>p.name + ' (' + p.group + ')').join(', ')) + '.';
+    return;
+  }
+  if (!rosterState.configured && !verbose){ box.classList.add('hidden'); return; }
+  box.className = 'callout';
+  box.style.borderLeftColor = '#B4531F';
+  box.style.background = '#FBEDE5';
+  box.innerHTML = '<b>The class list could not be loaded, so pupils will type their names.</b>' +
+    '<br>Reason: ' + esc(rosterState.why || 'unknown') +
+    (verbose ? '<br>Address tried: ' + esc(rosterState.url || '(none)') : '');
+}
+
+/* ---------- name search ---------- */
+function matches(q){
+  const clean = q.toLowerCase().replace(/[.,'\u2019]/g,'').trim();
+  if (clean.length < 2) return [];          // one letter matches half the class \u2014 too noisy
+  const tokens = clean.split(/\s+/).filter(Boolean);
+  if (!tokens.length) return [];
+  /* A token matches if it appears in the entry, or if the entry holds only an
+     initial for it \u2014 so typing "Ben Okafor" still finds "Ben O." */
+  const hit = (p, t) => p.hay.includes(t) ||
+    (/^[a-z]/.test(t) && p.initials.some(w => t.length > w.length && t.indexOf(w) === 0));
+  return FLAT.filter(p => tokens.every(t => hit(p, t))).slice(0, 8);
+}
+
+function closeList(){
+  const input = $('#p-search');
+  $('#p-list').classList.add('hidden');
+  input.setAttribute('aria-expanded','false');
+  input.removeAttribute('aria-activedescendant');
+  active = -1;
+}
+
+function paintList(){
+  const list = $('#p-list'), input = $('#p-search');
+  if (!shown.length){
+    if (input.value.trim().length < 2){ closeList(); return; }
+    list.innerHTML = '<li class="none">No name matches that. Check the spelling, or use ' +
+                     '<b>My name is not on the list</b> below.</li>';
+  } else {
+    list.innerHTML = shown.map((p,i)=>
+      '<li id="opt-'+i+'" role="option" data-i="'+i+'" aria-selected="'+(i===active)+'">' +
+      '<span>'+esc(p.name)+'</span><span class="g">'+esc(p.group)+'</span></li>').join('');
+    list.querySelectorAll('li').forEach(li=>{
+      /* mousedown, not click \u2014 it fires before the input loses focus */
+      li.addEventListener('mousedown', e=>{ e.preventDefault(); choose(shown[+li.dataset.i]); });
+    });
+  }
+  list.classList.remove('hidden');
+  input.setAttribute('aria-expanded','true');
+  if (active >= 0) input.setAttribute('aria-activedescendant','opt-'+active);
+  else input.removeAttribute('aria-activedescendant');
+}
+
+function choose(p){
+  picked = p;
+  const input = $('#p-search');
+  input.value = p.name;
+  input.classList.add('locked');
+  closeList();
+  $('#p-hint').outerHTML = '<div class="chosen" id="p-hint">' +
+    '<span>You are <b>' + esc(p.name) + '</b> in ' + esc(p.group) + '</span>' +
+    '<button class="btn-ghost btn-sm" type="button" id="p-reset">Not me</button></div>';
+  $('#p-reset').addEventListener('click', resetPick);
+  checkStart();
+}
+
+function resetPick(){
+  picked = null;
+  const input = $('#p-search');
+  input.value = ''; input.classList.remove('locked');
+  $('#p-hint').outerHTML = '<p class="qnote" id="p-hint" style="margin:7px 0 0">Type a few letters, then tap your name.</p>';
+  closeList();
+  input.focus();
+  checkStart();
+}
+
+$('#p-search').addEventListener('input', ()=>{
+  if (picked){ picked = null; }
+  $('#p-search').classList.remove('locked');
+  shown = matches($('#p-search').value);
+  active = shown.length ? 0 : -1;
+  paintList();
+  checkStart();
+});
+
+$('#p-search').addEventListener('keydown', e=>{
+  const open = !$('#p-list').classList.contains('hidden');
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+    if (!open){ shown = matches($('#p-search').value); active = -1; }
+    if (!shown.length) return;
+    e.preventDefault();
+    active = e.key === 'ArrowDown'
+      ? (active + 1) % shown.length
+      : (active <= 0 ? shown.length - 1 : active - 1);
+    paintList();
+  } else if (e.key === 'Enter'){
+    if (open && active >= 0 && shown[active]){ e.preventDefault(); choose(shown[active]); }
+  } else if (e.key === 'Escape'){
+    closeList();
+  }
+});
+
+$('#p-search').addEventListener('focus', ()=>{
+  if (!picked && $('#p-search').value.trim().length >= 2){
+    shown = matches($('#p-search').value); active = shown.length ? 0 : -1; paintList();
+  }
+});
+$('#p-search').addEventListener('blur', ()=> setTimeout(closeList, 120));
+
+$('#not-listed').addEventListener('click', ()=>{
+  mode = 'typed';
+  $('#pick-id').classList.add('hidden');
+  $('#type-id').classList.remove('hidden');
+  $('#back-to-list').classList.remove('hidden');
+  if (picked) $('#f-class').value = picked.group;
+  else if (!$('#f-name').value && $('#p-search').value.trim()) $('#f-name').value = $('#p-search').value.trim();
+  $('#f-name').focus();
+  checkStart();
+});
+$('#use-list').addEventListener('click', ()=>{
+  mode = 'picked';
+  $('#type-id').classList.add('hidden');
+  $('#pick-id').classList.remove('hidden');
+  checkStart();
+});
+
+function whoIsIt(){
+  return mode === 'picked'
+    ? { name: picked ? picked.name : '', group: picked ? picked.group : '' }
+    : { name: $('#f-name').value.trim(), group: $('#f-class').value.trim() };
+}
+
+/* ═══════════════════ START ═══════════════════ */
+function checkStart(){
+  const who = whoIsIt();
+  const ok = who.name.length > 1 && who.group.length > 0;
+  $('#btn-begin').disabled = !ok;
+  $('#start-warn').textContent = ok ? 'Ready when you are.'
+    : (mode === 'picked' ? 'Find your name in the list to begin.'
+                         : 'Enter your name and class to begin.');
+}
+$('#btn-pycheck').addEventListener('click', loadPy);
+paintPyStatus();
+loadRoster();
+$('#f-name').addEventListener('input', checkStart);
+$('#f-class').addEventListener('input', checkStart);
+
+$('#btn-begin').addEventListener('click', ()=>{
+  const who = whoIsIt();
+  state.name  = who.name;
+  state.group = who.group;
+  state.started = Date.now();
+  $('#t-who').textContent = state.name + ' \u00b7 ' + state.group;
+  show('s-quiz');
+  render(0);
+  loadPy();                       // ~25 minutes of runway before Part C
+  setInterval(tick, 1000);
+});
+
+function tick(){
+  state.elapsed = Math.floor((Date.now() - state.started)/1000);
+  const m = Math.floor(state.elapsed/60), s = state.elapsed%60;
+  $('#t-clock').textContent = m + ':' + String(s).padStart(2,'0');
+}
+
+function show(id){
+  $$('.screen').forEach(s=>s.classList.remove('on'));
+  $('#'+id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+/* ═══════════════════ RENDER ═══════════════════ */
+function isAnswered(q){
+  const a = state.answers[q.id];
+  if (q.type === 'mcq') return a !== undefined;
+  if (q.type === 'parsons') return !!a;
+  if (q.type === 'code') return typeof a === 'string' && a.replace(q.starter||'','').trim().length > 0;
+  return true;
+}
+
+function render(i){
+  state.idx = i;
+  const q = ITEMS[i];
+  $('#t-part').textContent = SECTIONS[q.sec].name;
+  const inSec = ITEMS.filter(x=>x.sec===q.sec && x.type!=='practice');
+  const posInSec = inSec.indexOf(q) + 1;
+  $('#nav-pos').textContent = q.type==='practice' ? 'Practice \u2014 not marked'
+      : 'Question ' + posInSec + ' of ' + inSec.length + ' in ' + SECTIONS[q.sec].name;
+  $('#nav-prev').disabled = i === 0;
+  $('#nav-next').textContent = i === ITEMS.length-1 ? 'Review my answers' : 'Next';
+
+  let h = '';
+  if (q.type === 'practice'){
+    h = practiceHTML();
+  } else {
+    h = '<div class="eyebrow">' + SECTIONS[q.sec].name + ' &nbsp;\u00b7&nbsp; ' + SECTIONS[q.sec].full +
+        ' &nbsp;\u00b7&nbsp; <b>' + q.id.replace(/[ab]$/,'') + '</b></div>' +
+        '<div class="card">' + questionHTML(q) + '</div>';
+  }
+  $('#q-host').innerHTML = h;
+  wire(q);
+  paintPyStatus();
+  paintProgress();
+  window.scrollTo(0,0);
+}
+
+function questionHTML(q){
+  let h = '<p class="qtext">' + q.text +
+          (q.marks>1 ? '<span class="marks">'+q.marks+' marks</span>' :
+           q.type!=='mcq' ? '<span class="marks">'+q.marks+' mark</span>' : '') + '</p>';
+  if (q.note) h += '<p class="qnote">' + q.note + '</p>';
+
+  const src = q.code || (q.sameCodeAs ? Q.find(x=>x.id===q.sameCodeAs).code : null);
+  if (src) h += '<pre class="code">' + hl(src) + '</pre>';
+
+  if (q.type === 'mcq'){
+    h += '<div class="opts" role="radiogroup">';
+    q.opts.forEach((o,i)=>{
+      const sel = state.answers[q.id] === i;
+      h += '<label class="opt'+(q.prose?' prose':'')+(sel?' sel':'')+'" data-i="'+i+'">' +
+           '<input type="radio" name="'+q.id+'"'+(sel?' checked':'')+'>' +
+           '<span class="txt">' + o + '</span></label>';
+    });
+    h += '</div>';
+  }
+
+  if (q.help) h += helpHTML(q);
+
+  if (q.type === 'parsons'){
+    h += '<div class="parsons" id="parsons"></div>' +
+         '<p class="indent-key">\u2191 \u2193 move a line &nbsp;\u00b7&nbsp; \u2190 \u2192 change the indent</p>' +
+         '<div class="runbar"><button class="btn btn-sm run-btn" id="run-C1">Run my program</button>' +
+         '<span class="hint py-status"></span></div>' +
+         '<div class="console" id="con-C1"><span class="muted">Press Run to see what your program prints.</span></div>';
+  }
+
+  if (q.type === 'code'){
+    const val = state.answers[q.id] !== undefined ? state.answers[q.id] : (q.starter || '');
+    h += '<div class="editor"><label class="qnote" for="ed-'+q.id+'">Your Python:</label>' +
+         '<textarea id="ed-'+q.id+'" spellcheck="false" autocapitalize="off" autocorrect="off">' + esc(val) + '</textarea>' +
+         '<div class="runbar"><button class="btn btn-sm run-btn" id="run-'+q.id+'">Run my program</button>' +
+         (q.tests[0].in.length ? '<span class="qnote" style="font-size:.86rem">Running uses ' +
+             q.tests[0].in.map(v=>'<b style="font-family:var(--mono)">'+esc(v)+'</b>').join(', ') + ' as the input</span>' : '') +
+         '<span class="hint py-status"></span></div>' +
+         '<div class="console" id="con-'+q.id+'"><span class="muted">Press Run to try your program. It is not marked yet.</span></div></div>';
+  }
+  return h;
+}
+
+function helpHTML(q){
+  const open = state.help[q.id] ? ' open' : '';
+  return '<details class="help" id="help-'+q.id+'"'+open+'>' +
+    '<summary><span class="tw">+</span><span>Remind me what this looks like</span>' +
+    '<span class="free">Using this does not cost you marks</span></summary>' +
+    '<div class="hbody"><p class="cap">' + q.help.title + '</p>' +
+    '<pre class="code">' + hl(q.help.code) + '</pre>' +
+    '<p class="hnote">' + q.help.note + '</p></div></details>';
+}
+
+function practiceHTML(){
+  return '<div class="eyebrow">Practice &nbsp;\u00b7&nbsp; <b>Not marked</b></div>' +
+  '<div class="card">' +
+  '<p class="qtext">A quick go on the code box before Part C</p>' +
+  '<p class="qnote">Part C asks you to type Python. Have a practice here first so the box itself is not the hard part. ' +
+  'Type something \u2014 or just press Run \u2014 then move on. Nothing here counts.</p>' +
+  '<div class="editor"><textarea id="ed-PRACTICE" spellcheck="false" autocapitalize="off" autocorrect="off">print("Hello from Year 10")</textarea>' +
+  '<div class="runbar"><button class="btn btn-sm run-btn" id="run-PRACTICE">Run my program</button>' +
+  '<span class="hint py-status"></span></div>' +
+  '<div class="console" id="con-PRACTICE"><span class="muted">Press Run to see what your program prints.</span></div></div>' +
+  '<div class="callout"><b>Three things worth knowing.</b> Indentation matters \u2014 the lines inside a loop or an ' +
+  '<span style="font-family:var(--mono)">if</span> must be pushed in. Only what you ' +
+  '<span style="font-family:var(--mono)">print</span> is checked. And if you get a red message, read the line number first.</div>' +
+  '</div>';
+}
+
+/* ---------- wiring ---------- */
+function wire(q){
+  if (q.type === 'mcq'){
+    $$('#q-host .opt').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        state.answers[q.id] = +el.dataset.i;
+        $$('#q-host .opt').forEach(o=>o.classList.remove('sel'));
+        el.classList.add('sel');
+        el.querySelector('input').checked = true;
+        paintProgress();
+      });
+    });
+  }
+  if (q.type === 'parsons'){
+    if (!state.answers[q.id]) state.answers[q.id] = {keys:q.lines.map(l=>l.k), ind:q.lines.map(()=>0)};
+    paintParsons(q);
+    $('#run-C1').addEventListener('click', async ()=>{
+      const con = $('#con-C1');
+      con.className = 'console'; con.textContent = 'Running\u2026';
+      const r = await runPy(parsonsCode(q), []);
+      showConsole(con, r);
+    });
+  }
+  if (q.help){
+    const dt = $('#help-'+q.id);
+    if (dt) dt.addEventListener('toggle', ()=>{ if (dt.open) state.help[q.id] = true; });
+  }
+  if (q.type === 'code' || q.type === 'practice'){
+    const ta = $('#ed-'+q.id);
+    ta.addEventListener('input', ()=>{ if(q.type==='code'){ state.answers[q.id] = ta.value; paintProgress(); } });
+    ta.addEventListener('keydown', e=>{
+      if (e.key === 'Tab'){
+        e.preventDefault();
+        const s = ta.selectionStart, en = ta.selectionEnd;
+        ta.value = ta.value.slice(0,s) + '    ' + ta.value.slice(en);
+        ta.selectionStart = ta.selectionEnd = s + 4;
+        if (q.type==='code'){ state.answers[q.id] = ta.value; paintProgress(); }
+      }
+    });
+    $('#run-'+q.id).addEventListener('click', async ()=>{
+      const con = $('#con-'+q.id);
+      con.className = 'console'; con.textContent = 'Running\u2026';
+      const ins = q.tests ? q.tests[0].in : [];
+      const r = await runPy(ta.value, ins);
+      showConsole(con, r);
+    });
+  }
+}
+
+function showConsole(con, r){
+  if (r.err){ con.className = 'console err'; con.textContent = r.err; }
+  else if (!r.out.trim()){ con.className='console'; con.innerHTML = '<span class="muted">Your program ran but printed nothing.</span>'; }
+  else { con.className = 'console'; con.textContent = r.out.replace(/\n+$/,''); }
+}
+
+/* ---------- Parsons ---------- */
+function lineText(q,k){ return q.lines.find(l=>l.k===k).t; }
+function parsonsCode(q){
+  const a = state.answers[q.id];
+  return a.keys.map((k,i)=> '    '.repeat(a.ind[i]) + lineText(q,k)).join('\n');
+}
+function paintParsons(q){
+  const a = state.answers[q.id];
+  const host = $('#parsons');
+  host.innerHTML = a.keys.map((k,i)=>
+    '<div class="prow"><div class="pbtns">' +
+      '<button class="pbtn" data-act="up" data-i="'+i+'"'+(i===0?' disabled':'')+' aria-label="Move up">\u2191</button>' +
+      '<button class="pbtn" data-act="dn" data-i="'+i+'"'+(i===a.keys.length-1?' disabled':'')+' aria-label="Move down">\u2193</button>' +
+    '</div>' +
+    '<div class="pline">' + '&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(a.ind[i]) + hl(lineText(q,k)) + '</div>' +
+    '<div class="pbtns">' +
+      '<button class="pbtn" data-act="out" data-i="'+i+'"'+(a.ind[i]===0?' disabled':'')+' aria-label="Less indent">\u2190</button>' +
+      '<button class="pbtn" data-act="in" data-i="'+i+'"'+(a.ind[i]>=2?' disabled':'')+' aria-label="More indent">\u2192</button>' +
+    '</div></div>').join('');
+  host.querySelectorAll('.pbtn').forEach(b=>b.addEventListener('click',()=>{
+    const i = +b.dataset.i, act = b.dataset.act;
+    if (act==='up'){ [a.keys[i-1],a.keys[i]]=[a.keys[i],a.keys[i-1]]; [a.ind[i-1],a.ind[i]]=[a.ind[i],a.ind[i-1]]; }
+    if (act==='dn'){ [a.keys[i+1],a.keys[i]]=[a.keys[i],a.keys[i+1]]; [a.ind[i+1],a.ind[i]]=[a.ind[i],a.ind[i+1]]; }
+    if (act==='in')  a.ind[i]++;
+    if (act==='out') a.ind[i]--;
+    state.answers[q.id] = a;
+    paintParsons(q); paintProgress();
+  }));
+}
+
+/* ---------- question map ---------- */
+function dotLabel(q){ return q.type==='practice' ? 'P' : q.id.slice(1); }
+
+function paintMap(){
+  const host = $('#qmap');
+  if (!host) return;
+  let html = '';
+  ['A','B','C'].forEach(sec=>{
+    const items = ITEMS.filter(x=>x.sec===sec);
+    html += '<span class="grp"><span class="gl">'+sec+'</span>';
+    items.forEach(q=>{
+      const i = ITEMS.indexOf(q);
+      const now = i === state.idx;
+      const done = q.type!=='practice' && isAnswered(q);
+      const cls = 'dot' + (done?' done':'') + (now?' now':'') + (q.type==='practice'?' practice':'');
+      const what = q.type==='practice' ? 'Practice, not marked'
+                 : 'Question ' + q.id + ', ' + (done ? 'answered' : 'not answered yet');
+      html += '<button class="'+cls+'" data-i="'+i+'" tabindex="'+(now?0:-1)+'"' +
+              (now?' aria-current="step"':'') + ' aria-label="'+what+'">'+dotLabel(q)+'</button>';
+    });
+    html += '</span>';
+  });
+  host.innerHTML = html;
+  const dots = Array.from(host.querySelectorAll('.dot'));
+  dots.forEach(b=>b.addEventListener('click', ()=>render(+b.dataset.i)));
+  /* one tab stop for the whole rail; arrow keys move within it */
+  host.onkeydown = e=>{
+    const at = dots.indexOf(document.activeElement);
+    if (at < 0) return;
+    let to = null;
+    if (e.key==='ArrowRight' || e.key==='ArrowDown') to = Math.min(at+1, dots.length-1);
+    if (e.key==='ArrowLeft'  || e.key==='ArrowUp')   to = Math.max(at-1, 0);
+    if (e.key==='Home') to = 0;
+    if (e.key==='End')  to = dots.length-1;
+    if (to !== null){ e.preventDefault(); dots[to].focus(); }
+  };
+}
+
+function paintProgress(){ paintSpine(); paintMap(); }
+
+/* ---------- progress ---------- */
+function paintSpine(){
+  ['A','B','C'].forEach(sec=>{
+    const qs = Q.filter(q=>q.sec===sec);
+    const done = qs.filter(isAnswered).length;
+    $('#sp-'+sec).style.width = Math.round(100*done/qs.length) + '%';
+  });
+}
+
+/* ---------- navigation ---------- */
+$('#nav-prev').addEventListener('click', ()=>{ if(state.idx>0) render(state.idx-1); });
+$('#nav-next').addEventListener('click', ()=>{
+  if (state.idx < ITEMS.length-1) render(state.idx+1);
+  else openReview();
+});
+$('#btn-back-quiz').addEventListener('click', ()=>{ show('s-quiz'); render(state.idx); });
+
+function openReview(){
+  const grid = $('#review-grid');
+  grid.innerHTML = Q.map(q=>{
+    const done = isAnswered(q);
+    return '<button class="chip '+(done?'done':'blank')+'" data-id="'+q.id+'">'+q.id+'</button>';
+  }).join('');
+  grid.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+    const i = ITEMS.findIndex(x=>x.id===c.dataset.id);
+    show('s-quiz'); render(i);
+  }));
+  const blank = Q.filter(q=>!isAnswered(q)).length;
+  $('#review-count').textContent = blank === 0
+    ? 'All ' + Q.length + ' questions have an answer.'
+    : blank + ' of ' + Q.length + ' questions are still blank. You can still finish \u2014 blanks simply score nothing.';
+  show('s-review');
+}
+
+/* ═══════════════════ MARKING ═══════════════════ */
+$('#btn-submit').addEventListener('click', async ()=>{
+  const b = $('#btn-submit');
+  b.disabled = true; b.textContent = 'Saving your work\u2026';
+  await markAll();
+  paintResults();
+  show('s-results');
+  finishUp();
+});
+
+async function markAll(){
+  const per = {}, flags = new Set(), code = {};
+
+  /* Parts A and B */
+  Q.filter(q=>q.sec!=='C').forEach(q=>{
+    const a = state.answers[q.id];
+    const ok = a === q.ans;
+    per[q.id] = {marks: ok?1:0, max:1, sel:(a===undefined?null:a), ok};
+    if (!ok && q.flag) flags.add(q.flag);
+  });
+  /* a pupil who traced B8a correctly but could not explain it is a specific case */
+  if (per['B8a'] && per['B8a'].ok && per['B8b'] && !per['B8b'].ok) flags.add('TRACE_ONLY');
+  else if (per['B8b'] && !per['B8b'].ok && per['B8a'] && !per['B8a'].ok) flags.delete('TRACE_ONLY');
+
+  /* Part C */
+  const c1 = Q.find(q=>q.id==='C1');
+  if (state.answers['C1']){
+    const src = parsonsCode(c1);
+    code['C1'] = src;
+    const r = await runPy(src, []);
+    const got = normLines(r.out).join('\n');
+    const want = normLines(c1.expect).join('\n');
+    let m = 0, note;
+    if (!r.err && got === want){ m = 3; note = 'Correct \u2014 the program produced exactly the right output.'; }
+    else {
+      const a = state.answers['C1'];
+      const orderOK = a.keys.join(',') === c1.order.join(',');
+      const wantInd = {}; c1.order.forEach((k,i)=> wantInd[k] = c1.indent[i]);
+      const indOK = a.keys.every((k,i)=> a.ind[i] === wantInd[k]);
+      m = (orderOK?1:0) + (indOK?1:0);
+      note = (orderOK ? 'The order of the lines is right. ' : 'The lines are not yet in the right order. ') +
+             (indOK ? 'The indentation is right too.' : 'The indentation is not right yet \u2014 the two lines inside the loop need pushing in by one step.');
+    }
+    per['C1'] = {marks:m, max:3, note, out:(r.err||r.out||'').trim(), src};
+    if (m < 3) flags.add('WRITE_LOOP');
+  } else {
+    per['C1'] = {marks:0, max:3, note:'Not attempted.', out:'', src:''};
+  }
+
+  for (const q of Q.filter(x=>x.type==='code')){
+    const src = state.answers[q.id] !== undefined ? state.answers[q.id] : (q.starter||'');
+    code[q.id] = src;
+    const attempted = src.replace(q.starter||'','').trim().length > 0;
+    if (!attempted || pyState !== 'ready'){
+      per[q.id] = {marks:0, max:q.marks, per:[], src,
+        note: attempted ? 'Could not be marked automatically \u2014 your code has been saved for your teacher.' : 'Not attempted.'};
+      continue;
+    }
+    const results = [];
+    for (const t of q.tests) results.push(await runPy(src, t.in));
+    const res = q.mark(results, null, src);
+    per[q.id] = {marks:res.marks, max:q.marks, per:res.per, src};
+    if (res.flag) flags.add(res.flag);
+    if (res.marks === 0 && results.every(r=>r.err)) flags.add('SYNTAX');
+  }
+
+  const sec = {};
+  ['A','B','C'].forEach(s=>{
+    const qs = Q.filter(q=>q.sec===s);
+    sec[s] = {got: qs.reduce((n,q)=>n+per[q.id].marks,0), max: qs.reduce((n,q)=>n+q.marks,0)};
+  });
+
+  state.result = {per, flags:[...flags], sec, code};
+}
+
+/* ═══════════════════ RESULTS ═══════════════════ */
+function paintResults(){
+  const R = state.result;
+  $('#r-name').textContent = 'Thank you, ' + state.name.split(' ')[0];
+  const mins = Math.round(state.elapsed/60);
+  $('#r-meta').textContent = state.group + ' \u00b7 ' + new Date().toLocaleDateString('en-GB') +
+     ' \u00b7 finished in about ' + mins + ' minute' + (mins===1?'':'s');
+
+  /* effort, not attainment \u2014 nothing here reveals a score */
+  const attempted = Q.filter(isAnswered).length;
+  const usedHelp  = Object.keys(state.help).length;
+  let line = 'You gave an answer to ' + attempted + ' of the ' + Q.length + ' questions';
+  line += usedHelp ? ', and used the reminder on ' + usedHelp + ' of the Part C questions. Using those was the right call \u2014 it shows you can pick an idea up and apply it.'
+                   : '. ';
+  if (attempted === Q.length && !usedHelp) line = 'You answered all ' + Q.length + ' questions without opening a single reminder. ';
+  $('#r-effort').innerHTML = '<b>Well done for sticking with it.</b> ' + line;
+
+  if (pyState !== 'ready'){
+    $('#r-effort').insertAdjacentHTML('afterend',
+      '<p class="qnote" style="margin-top:12px">Python did not load on this device, so Part C could not be ' +
+      'checked automatically. Your code is saved in your results code and your teacher will mark it.</p>');
+  }
+
+  const payload = {
+    v:1, n:state.name, c:state.group, d:new Date().toISOString().slice(0,10),
+    t:state.elapsed,
+    s:{A:[R.sec.A.got,R.sec.A.max], B:[R.sec.B.got,R.sec.B.max], C:[R.sec.C.got,R.sec.C.max]},
+    m:Object.fromEntries(Q.map(q=>[q.id, R.per[q.id].marks])),
+    sel:Object.fromEntries(Q.filter(q=>q.type==='mcq').map(q=>[q.id, R.per[q.id].sel])),
+    f:R.flags,
+    h:Object.keys(state.help),
+    code:R.code
+  };
+  const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  state.payload = payload;
+  $('#r-code').value = 'GRANGE1:' + b64;
+}
+
+/* ── send to the Google Sheet, if one is configured ── */
+async function sendResults(){
+  const P = state.payload, R = state.result;
+  const body = {
+    key: SUBMIT.key,
+    name: P.n, group: P.c, date: P.d,
+    minutes: Math.round(P.t/60),
+    A:R.sec.A.got, Amax:R.sec.A.max,
+    B:R.sec.B.got, Bmax:R.sec.B.max,
+    C:R.sec.C.got, Cmax:R.sec.C.max,
+    reminders:(P.h||[]).length,
+    flags:(P.f||[]).join(' '),
+    code: $('#r-code').value
+  };
+  const res = await fetch(SUBMIT.url, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},  // keeps it a simple request, so no CORS preflight
+    body: JSON.stringify(body)
+  });
+  const out = await res.json();
+  if (!out || !out.ok) throw new Error(out && out.error ? out.error : 'the sheet refused it');
+}
+
+function paintSend(stage, detail){
+  const box = $('#send-box'), manual = $('#manual-box');
+  if (stage === 'off'){ box.classList.add('hidden'); manual.classList.remove('hidden'); return; }
+  box.classList.remove('hidden');
+  if (stage === 'sending'){
+    manual.classList.add('hidden');
+    box.innerHTML = '<h2>Sending your work\u2026</h2><p class="qnote" style="margin:0">This takes a second or two. Please do not close the page.</p>';
+  }
+  if (stage === 'sent'){
+    manual.classList.add('hidden');
+    box.innerHTML = '<h2>Your work has been sent</h2>' +
+      '<p class="qnote" style="margin:0 0 12px">That is everything \u2014 there is nothing else you need to do. ' +
+      'Your teacher will go through it with you and give you a short report.</p>' +
+      '<button class="btn-ghost btn-sm" id="show-manual">Show my results code anyway</button>';
+    $('#show-manual').addEventListener('click', ()=>{
+      manual.classList.remove('hidden');
+      $('#show-manual').remove();
+    });
+  }
+  if (stage === 'failed'){
+    manual.classList.remove('hidden');
+    box.innerHTML = '<h2>Your work could not be sent automatically</h2>' +
+      '<p class="qnote" style="margin:0">Nothing is lost. Follow the step below instead and your teacher will ' +
+      'still get everything.</p>' +
+      (detail ? '<p class="qnote" style="font-size:.82rem;color:var(--ink-3);margin:8px 0 0">Reason: ' + esc(detail) + '</p>' : '');
+  }
+}
+
+async function finishUp(){
+  if (!SUBMIT.url || !SUBMIT.key){ paintSend('off'); return; }
+  paintSend('sending');
+  try{
+    await withTimeout(sendResults(), 20000, 'it took too long');
+    paintSend('sent');
+  }catch(e){
+    paintSend('failed', e && e.message ? e.message : 'unknown problem');
+  }
+}
+
+$('#btn-copy').addEventListener('click', async ()=>{
+  const ta = $('#r-code');
+  try{ await navigator.clipboard.writeText(ta.value); }
+  catch(e){ ta.select(); document.execCommand('copy'); }
+  $('#copy-note').textContent = 'Copied \u2014 now paste it where your teacher asked.';
+  $('#copy-note').style.color = 'var(--teal-mid)';
+});
+
+$('#btn-dl').addEventListener('click', ()=>{
+  const safe = state.name.replace(/[^a-z0-9]+/gi,'_');
+  const blob = new Blob([$('#r-code').value], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'baseline_' + safe + '.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* guard against losing work */
+window.addEventListener('beforeunload', e=>{
+  if (state.started && !state.result){ e.preventDefault(); e.returnValue = ''; }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# The Grange School — Year 10 baseline assessment
+# This page carries pupil names. Keep it out of search indexes.
+User-agent: *
+Disallow: /
